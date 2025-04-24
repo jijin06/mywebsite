@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Top 5 European Football Leagues</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0f24;
+      --card-bg: #1c1f2b;
+      --primary: #00ffe5;
+      --text: #ffffff;
+      --highlight: #ffd166;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: var(--text);
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 40px;
+      color: var(--primary);
+      text-shadow: 3px 3px 10px rgba(0, 255, 229, 0.6);
+      text-align: center;
+    }
+
+    .leagues, .clubs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+      max-width: 1100px;
+      width: 100%;
+      padding: 20px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 20px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(5px);
+    }
+
+    .card:hover {
+      transform: translateY(-10px) scale(1.05);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+    }
+
+    .card img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      margin-bottom: 15px;
+    }
+
+    .card-name {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--highlight);
+    }
+
+    .back-btn {
+      margin-top: 30px;
+      padding: 12px 24px;
+      background: var(--primary);
+      color: #000;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .back-btn:hover {
+      background: #00fff0;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    a.card {
+      text-decoration: none;
+      color: inherit;
+    }
+  </style>
+</head>
+<body>
+  <h1 id="page-title">Top 5 European Football Leagues</h1>
+
+  <!-- Leagues Section -->
+  <div id="leagues" class="leagues">
+    <div class="card" onclick="showClubs('premier')">
+      <img src="https://upload.wikimedia.org/wikipedia/en/f/f2/Premier_League_Logo.svg">
+      <div class="card-name">Premier League</div>
+    </div>
+    <div class="card" onclick="showClubs('laliga')">
+      <img src="https://logowik.com/content/uploads/images/laliga6363.logowik.com.webp">
+      <div class="card-name">La Liga</div>
+    </div>
+    <div class="card" onclick="showClubs('bundesliga')">
+      <img src="https://upload.wikimedia.org/wikipedia/en/d/df/Bundesliga_logo_%282017%29.svg">
+      <div class="card-name">Bundesliga</div>
+    </div>
+    <div class="card" onclick="showClubs('seriea')">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9Swy1cy88i2gzsk3xRAgES2W8C9Tr6Rle-g&s">
+      <div class="card-name">Serie A</div>
+    </div>
+    <div class="card" onclick="showClubs('ligue1')">
+      <img src="https://www.fifplay.com/img/public/ligue-1-logo.png">
+      <div class="card-name">Ligue 1</div>
+    </div>
+  </div>
+
+  <!-- Clubs Section -->
+  <div id="clubs" class="clubs hidden"></div>
+  <button class="back-btn hidden" onclick="goBack()" id="backBtn">← Back to Leagues</button>
+
+  <script>
+    const clubData = {
+      premier: {
+        title: "Premier League Clubs",
+        clubs: [
+          { name: "Arsenal", logo: "https://upload.wikimedia.org/wikipedia/en/5/53/Arsenal_FC.svg", link: "https://www.arsenal.com" },
+          { name: "Man Utd", logo: "https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg", link: "https://www.manutd.com" },
+          { name: "Chelsea", logo: "https://upload.wikimedia.org/wikipedia/en/c/cc/Chelsea_FC.svg", link: "https://www.chelseafc.com" },
+          { name: "Liverpool", logo: "https://upload.wikimedia.org/wikipedia/en/0/0c/Liverpool_FC.svg", link: "https://www.liverpoolfc.com" },
+          { name: "Manchester City", logo: "https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg", link: "https://www.mancity.com" }
+        ]
+      },
+      laliga: {
+        title: "La Liga Clubs",
+        clubs: [
+          { name: "Real Madrid", logo: "https://upload.wikimedia.org/wikipedia/en/5/56/Real_Madrid_CF.svg", link: "https://www.realmadrid.com" },
+          { name: "Barcelona", logo: "https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg", link: "https://www.fcbarcelona.com" },
+          { name: "Atletico Madrid", logo: "https://storage.googleapis.com/kagglesdsdata/datasets/1807253/2947869/top-5-football-leagues/la-liga/atletico-madrid.png?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=databundle-worker-v2%40kaggle-161607.iam.gserviceaccount.com%2F20250424%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20250424T161611Z&X-Goog-Expires=345600&X-Goog-SignedHeaders=host&X-Goog-Signature=857afcbf532ece0cf6cac6cf0dbbbfbbb65d6635751971c6e512af6f4a86a3f912a37685a4f4274177d6aeb5282e00f744b4622f26695f58a929e57e157e5dc58c6caac7342444a1f7577048a6464ee35ad4c97c05c72fca9ae005d0ba97ac2640d380cd13eced13ec22870780384ad70bdc40f5bebf63eca4b06fa3c29ef5f16abafa66c8ffb2f56c27f3ed73474ee4bc0745aba9de4831f494f1c6d2db6ac715a0ea01e2adc871f31729e2580d62c6774ac75b4a493fa2e8098e5384f7780ddf009a33d0aec4f5da783a39c97b6a7243d6d3aefd06c19844f8fb61856a46f5cd848be512649940274a3a5d89906811f649fc632318ecf67d447b164585e228", link: "https://en.atleticodemadrid.com" },
+          { name: "Sevilla", logo: "https://storage.googleapis.com/kagglesdsdata/datasets/1807253/2947869/top-5-football-leagues/la-liga/sevilla.png?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=databundle-worker-v2%40kaggle-161607.iam.gserviceaccount.com%2F20250424%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20250424T161611Z&X-Goog-Expires=345600&X-Goog-SignedHeaders=host&X-Goog-Signature=d017a183fc973f5e7a519977c61e15f42a17b7090d6cd869f593cb3c0898f9b165cc0b3ad6080d13245aaa23884da7516ab8654fc15f2d6cada4b6d021a4534b290106a23bed624b74268889850f87aa240332c8a3547c24d3762405d351f9f65e45a5cfd556ab4f37d73d94e0922a1a827a65621a073dfcb620bab193198165ae6385c8c3709850aefe0662500ec2c2daec477b72835478ab5cc124b331eb727fe3fe638de2c1b752f49ceef9e604128866ab8d9e8e51e5224b60be4003c147e8ccdb40c5893239cffe95a850a73be3beb6745d471e1db37cb9afc71b769aea67f2787cf32f3478238217a22d151b5c84037fe7ea5e88611bcb647c20e722ca", link: "https://www.sevillafc.es" },
+          { name: "Real Sociedad", logo: "https://storage.googleapis.com/kagglesdsdata/datasets/1807253/2947869/top-5-football-leagues/la-liga/real-sociedad.png?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=databundle-worker-v2%40kaggle-161607.iam.gserviceaccount.com%2F20250424%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20250424T161611Z&X-Goog-Expires=345600&X-Goog-SignedHeaders=host&X-Goog-Signature=8cc1d4bdb1e7dc758c553368c579c38975cd92b8d3ac8c3f7412f19f01df4533eb534b4fb20f2cca5c7d9d32f1464e701a4be33c08921c94b119a7c95a5448929c72ff3ce30d79ec1399df9b9440f402357fee690cb769329c6cdface6a16544dbd1f734fcdc9074b475c8d170ee02f4384468524dafe3cf004225f7fd350f148021d6924dc8a16db787fa57958ab08f9a233c70180671b5c2fa452b5f5bb98e8e89e746ccbe98e6452a99dd9e679557f7c89430344e2d85619f4d61f22b19edefc86b92028f1257f89f0e644b0756763b908fe5d1ce0f78789881c27f4d728cf6afb83af1507a3505177b1978193f0a672b9ac26eb1e6bf5df70c0d2efb605c", link: "https://www.realsociedad.eus" }
+        ]
+      },
+      bundesliga: {
+        title: "Bundesliga Clubs",
+        clubs: [
+          { name: "Bayern Munich", logo: "https://storage.googleapis.com/kagglesdsdata/datasets/1807253/2947869/top-5-football-leagues/bundesliga/bayern.png?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=databundle-worker-v2%40kaggle-161607.iam.gserviceaccount.com%2F20250424%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20250424T113541Z&X-Goog-Expires=345600&X-Goog-SignedHeaders=host&X-Goog-Signature=dbc2207e72663d6eecc9da19976b0536c0d6f8a625ef3296a4071fafe58a8fa2e3fa3386b39eaab31817ff151ff4dfee1e45d23d54326a61ba74701251fda95cb1aaaae95918f3438a0f11cb0175979c238143f51020e1761b9e681439245461afa2e823c2187bf00110c76b4f6ab28b21960e0f61c5ed5938cb10eb8b77e0b73d3cc93e07ceb19a58972e33e5f031c06900d1a88e707f2257573f34877d23baef8a6860aa7f9606d509c98728c068cde80c34ce90ffe8b9e62ae5404d04f23f606f0fead7278c01948ef6487393bb82c5ca688bebf57a5c057092c97c18aa1eed9742ce7234124ad4929c382ab912cd054a59f4b4a6aecd1d5d27f5ccf1b303", link: "https://fcbayern.com" },
+          { name: "Dortmund", logo: "https://upload.wikimedia.org/wikipedia/commons/6/67/Borussia_Dortmund_logo.svg", link: "https://www.bvb.de" },
+          { name: "RB Leipzig", logo: "https://upload.wikimedia.org/wikipedia/en/0/04/RB_Leipzig_2014_logo.svg", link: "https://www.dierotenbullen.com" },
+          { name: "Leverkusen", logo: "https://upload.wikimedia.org/wikipedia/en/5/59/Bayer_04_Leverkusen_logo.svg", link: "https://www.bayer04.de" },
+          { name: "Frankfurt", logo: "https://storage.googleapis.com/kagglesdsdata/datasets/1807253/2947869/top-5-football-leagues/bundesliga/frankfurt.png?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=databundle-worker-v2%40kaggle-161607.iam.gserviceaccount.com%2F20250424%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20250424T113541Z&X-Goog-Expires=345600&X-Goog-SignedHeaders=host&X-Goog-Signature=8ce4ebe5ab2a78e7f71a638f002592bf46a508471559fc44fbf74dabc9ea71f03579b033db022f8a40b6471b69fefdd07933acbabb6bfa467bca16f3cab0d0ebb57106bd01a3f5763601b343cadcfc06da273e10eb89c81227f676766ae3b51d5787ac248ff3212cd3a00f858972b1c84279b3d08f509be3d42dcf331c3ab82150a05f8e035da0f0ed984d4689fbd7a885904b53ef7e11269af264a7d5091c1cd2a6583a9f0965d42587498ed76f8180ed746de18cfdcb687ba47ec178e757d8b522705d0bb927f000eed54be2e7eabb03544037b978a71e32e50d83b21dc6f4c891a0c6d674ab67f2a923a73ebe1c6aa3729adfb5feca45e3b7d5b191fc6302", link: "https://www.eintracht.de" }
+        ]
+      },
+      seriea: {
+        title: "Serie A Clubs",
+        clubs: [
+          { name: "Juventus", logo: "https://storage.googleapis.com/kagglesdsdata/datasets/1807253/2947869/top-5-football-leagues/serie-a/juventus.png?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=databundle-worker-v2%40kaggle-161607.iam.gserviceaccount.com%2F20250424%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20250424T161449Z&X-Goog-Expires=345600&X-Goog-SignedHeaders=host&X-Goog-Signature=6590e859f32171acead0ec2f86745e0a0d38f156eac52aa589fe562c3c384b1acb16342dc5dc45f3ce2b97db5c3a890f7a94883a3e777130824c2ba4c9e9bc9b2b84a5677082a8431090164c3a942d0fdd502e310702cb7e0fa7c803f32c3e65a1aefebdf291716a549fca02631699d68a9834190ef73e1054aa35f78984623e088c444c647090ac7ed003b02bc82778dd9c0e80780b426d6daba74257c37e7dbe2db4a8ea834f3738edd480a911ab92612b28a5b016e6c2838ec398a3b9cf9a813b6451d4414eeec9dde51351899b3220cd96c0feaca2adc4f93afb1e58b88a15e85ec57af7e6e74c23b7e1c0b131a8313505aa753c93514c6186ee27d82fbf", link: "https://www.juventus.com" },
+          { name: "AC Milan", logo: "https://upload.wikimedia.org/wikipedia/commons/d/d0/Logo_of_AC_Milan.svg", link: "https://www.acmilan.com" },
+          { name: "Inter Milan", logo: "https://storage.googleapis.com/kagglesdsdata/datasets/1807253/2947869/top-5-football-leagues/serie-a/inter.png?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=databundle-worker-v2%40kaggle-161607.iam.gserviceaccount.com%2F20250424%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20250424T161449Z&X-Goog-Expires=345600&X-Goog-SignedHeaders=host&X-Goog-Signature=74d83bf03bb7cf563a38c4edeb25633d399a88d771b7292f6537ce015272b4d1b9ed81cc50de9aed5f9c6c803db027bb552dff6a24e9a28e4410983b20fbc06c402495e97ec42686f854ed321d4339420041f2bfe6be850546a9256721357975f5475bb246fa160e6af32da3aafebc5a632873dde3d63c461d3c748f5b34d815aca8d272538b8fa4e1781c4885baf3deb57e1f4c6c1c63adfb3894a1284b9ec7f25177a3254ded6595f4ebd13fb4ae01ececc77e01a03946a2086377e951aff72a2db9a7bdc90d6a301407bd26a3053f1ba85300711d6a775ad4c851d533d63928fc17fa754def11c2b5e4c5bbe05506796c71c4d68e3e2c5149cdc33e2bd0e1", link: "https://www.inter.it" },
+          { name: "Roma", logo: "https://upload.wikimedia.org/wikipedia/en/f/f7/AS_Roma_logo_%282017%29.svg", link: "https://www.asroma.com" },
+          { name: "Napoli", logo: "https://storage.googleapis.com/kagglesdsdata/datasets/1807253/2947869/top-5-football-leagues/serie-a/napoli.png?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=databundle-worker-v2%40kaggle-161607.iam.gserviceaccount.com%2F20250424%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20250424T161449Z&X-Goog-Expires=345600&X-Goog-SignedHeaders=host&X-Goog-Signature=134918c5504543ce153f0076dbd9628f9810edf8735c1bb700987d8147ff86bf78cc36155cefc266f429ec29fece4f87a63dc0ff1ab8b7d329a7cb278e497b43c137388777cd60c9aabe146da8d457494a48e07e23f4918d91c5e6ce7c887852b55f17506ff92f402b1f4fd5a0531cabd8570acd7931c64aca04c1bb857bd3842d647bdfd410a3dcaf96d172c11efdc2367ffd000ea15f710f3a81660b64e30adab9a4fc9686921aa1704ae6d48486e06003fabe87ac4f30dbe6e6cb638da479400e3903525d82568373fcbee48b8d624057378fa97dd2bc1ce098815df2e636fb23f862bc63f9cc35dd999b21f01c35ca6d514ada50bfcff37ff2d10305eadf", link: "https://www.sscnapoli.it" }
+        ]
+      },
+      ligue1: {
+        title: "Ligue 1 Clubs",
+        clubs: [
+          { name: "PSG", logo: "https://upload.wikimedia.org/wikipedia/en/a/a7/Paris_Saint-Germain_F.C..svg", link: "https://en.psg.fr" },
+          { name: "Lyon", logo: "https://storage.googleapis.com/kagglesdsdata/datasets/1807253/2947869/top-5-football-leagues/french-ligue1/olympique-lyonnais.png?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=databundle-worker-v2%40kaggle-161607.iam.gserviceaccount.com%2F20250424%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20250424T164057Z&X-Goog-Expires=345600&X-Goog-SignedHeaders=host&X-Goog-Signature=76283fd553ce40930fcdb7a82e5432afc64bae2208c651f87f860a56a00b65f1435d87b0fa861c86f03dd4dd0a9537f16a2e09e36b2f7050f8de593f6544de050d6598a5d7720782c18432868da617521fab96938600b14590ecca15094c540b8cddbc87e1c3c3a0f408baf86d3e0bd6375aab616c89b699010201b3205ec84a0b76e253c45626c63f70989449e00fc55addbd48845c949782818d87dfcea2bcb068a46aef2194333a7cd66a87bd14a8db1545bb9751a94d2bb03dc2deb729b4e82cc0bb38ec5b579153db15d023f70db48a83b7c86e7caeab4dc83a9d86ca3d852fe5c51ded180b7e65e7cafce9ded908dffd18954474ad7b29648a98b664c4", link: "https://www.ol.fr" },
+          { name: "Marseille", logo: "https://storage.googleapis.com/kagglesdsdata/datasets/1807253/2947869/top-5-football-leagues/french-ligue1/olympique-de-marseille.png?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=databundle-worker-v2%40kaggle-161607.iam.gserviceaccount.com%2F20250424%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20250424T164057Z&X-Goog-Expires=345600&X-Goog-SignedHeaders=host&X-Goog-Signature=8aab448b45f3945fb6ce739d30c006f790ed34ec582f6e2d6b98439c7bc626074adf5fccd68c9bdad13b31dc3f1bd7983383454e6fb719f3e4e8479e16e1ee2599198949c55db7d52c2ce6e16eaaec7aae4e3f83fcec40da5aace7c3c7baf5359913557c196ad523b2e8308cce7be384585d06129a58b7a2bb1166e29a5acc4e0c8a625a99be5b509ae024ba7d8b18ed9c257b651a8e2c8674d0986631467eaaa3e52e3d0e3ebae98c15e5c7993230a18b468153681252dfcd6d3415986d03c1355fe27b573a41d781a8b0246b4200987b3e07e476c6defe410207c6b59e374256b09fb270ff4e3555b9dc04ab58ef516d3633f92dca4b180b475353e1bb0787", link: "https://www.om.fr" },
+          { name: "Monaco", logo: "https://storage.googleapis.com/kagglesdsdata/datasets/1807253/2947869/top-5-football-leagues/french-ligue1/as-monaco.png?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=databundle-worker-v2%40kaggle-161607.iam.gserviceaccount.com%2F20250424%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20250424T164057Z&X-Goog-Expires=345600&X-Goog-SignedHeaders=host&X-Goog-Signature=968459994436786358b610f6656c3d5a597b22be4118ab36e272461e8f13e9bdcbf9382dfd0ea712eec63cce6d61e6fa8baa761bfa37ce04d29cd444b808edb0d178fae03fcb4eaf6958eb60be2d9ed8bdf1fe244dab6add73bf7c1d15b4da1e6f505eecec1ea6b06df013aa4f624b653cf1de36f5f03a8d3db91d013064f35576b2d88f0a9ae13647cb84e0aa3f5259f0106c9458d55b4e4f3aa2f9f6e007fb67164505b7ce9b2e0605335275d4a28e864d691a9ffeaaada5a63f25b03761e3047ce5579a1dd4b5d2f56991b5b211e8c997492c70ea9054ee61d3614f766cc38bc49c9658be82ce92add671a87da5c0e58261c6c0e832e1a611579c657c65ef", link: "https://www.asmonaco.com" },
+          { name: "Lille", logo: "https://storage.googleapis.com/kagglesdsdata/datasets/1807253/2947869/top-5-football-leagues/french-ligue1/losc-lille.png?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=databundle-worker-v2%40kaggle-161607.iam.gserviceaccount.com%2F20250424%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20250424T164057Z&X-Goog-Expires=345600&X-Goog-SignedHeaders=host&X-Goog-Signature=c8ba19aeebe578404bc2ff33923ddd36d28d08cccd97408e526c575eb7ac150588b91559da3194969a96c8f2d2e40382fc54865fdcdf1c752e0b9eaf73c17e907a525c8e4fcf1c74273529f86941adefad212b05a386bdb12fda4d3b915e46061e2dd77623f8f54d236502b9cb7e24ac9bdf6de7df264882cdc4473237fdb38b457f3efcc4346d0d3cd7e6cb65eb1d611a8aada23b0778db33a76da1591755127988f7a5869abeda3d008fcaae2048988b26eaf9830031bb8302b92a566f7612c10d055cf9358e6ea878e069154efdd09ed211f4e50636d55b81e0564325633454375a4e802354b6ce0d5dd860c52a1ca62ca206e1ddf847749b2361b57f4320", link: "https://www.losc.fr" }
+        ]
+      }
+    };
+
+    function showClubs(leagueKey) {
+      const league = clubData[leagueKey];
+      if (!league) return;
+
+      document.getElementById('leagues').classList.add('hidden');
+      document.getElementById('clubs').classList.remove('hidden');
+      document.getElementById('backBtn').classList.remove('hidden');
+      document.getElementById('page-title').textContent = league.title;
+
+      const clubsHTML = league.clubs.map(club => `
+        <a class="card" href="${club.link}" target="_blank">
+          <img src="${club.logo}" alt="${club.name}">
+          <div class="card-name">${club.name}</div>
+        </a>
+      `).join('');
+
+      document.getElementById('clubs').innerHTML = clubsHTML;
+    }
+
+    function goBack() {
+      document.getElementById('clubs').classList.add('hidden');
+      document.getElementById('backBtn').classList.add('hidden');
+      document.getElementById('leagues').classList.remove('hidden');
+      document.getElementById('page-title').textContent = "Top 5 European Football Leagues";
+    }
+  </script>
+</body>
+</html>
+>
+
+
+
+
+
+
+
+
+
